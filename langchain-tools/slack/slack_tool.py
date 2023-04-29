@@ -1,11 +1,12 @@
 """
-This tool allows agents to interact with the Twitter Api
-and operate on a Twitter instance.
+This tool allows agents to interact with the Slack Api
+and operate on a Slack instance.
 
 To use this tool, you must first set as environment variables:
     SLACK_BOT_TOKEN
 """
 
+from typing import Optional
 from pydantic import Field
 
 from langchain.tools.base import BaseTool
@@ -18,7 +19,7 @@ class SlackAction(BaseTool):
     name = ""
     description = ""
 
-    def _run(self, instructions: str) -> str:
+    def _run(self, instructions: Optional[str]) -> str:
         """Use the Slack API to run an operation."""
         return self.api_wrapper.run(self.mode, instructions)
 

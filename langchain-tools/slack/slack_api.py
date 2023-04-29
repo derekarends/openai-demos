@@ -1,4 +1,4 @@
-"""Util that calls Slack."""
+""" Util that calls Slack. """
 from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Extra, root_validator
@@ -12,7 +12,7 @@ from langchain.utils import get_from_dict_or_env
 
 
 class SlackApiWrapper(BaseModel):
-    """Wrapper for Slack API."""
+    """ Wrapper for Slack API. """
 
     slack: Any  #: :meta private:
     bot_token: Optional[str] = None
@@ -31,8 +31,7 @@ class SlackApiWrapper(BaseModel):
     ]
 
     class Config:
-        """Configuration for this pydantic object."""
-
+        """ Configuration for this pydantic object. """
         extra = Extra.forbid
 
     def list(self) -> List[Dict]:
@@ -40,7 +39,7 @@ class SlackApiWrapper(BaseModel):
 
     @root_validator()
     def validate_environment(cls, values: Dict) -> Dict:
-        """Validate that api key and python package exists in environment."""
+        """ Validate that api key and python package exists in environment. """
         bot_token = get_from_dict_or_env(values, "bot_token", "SLACK_BOT_TOKEN")
         values["bot_token"] = bot_token
 
@@ -48,8 +47,8 @@ class SlackApiWrapper(BaseModel):
             from slack_sdk import WebClient
         except ImportError:
             raise ImportError(
-                "tweepy is not installed. "
-                "Please install it with `pip install tweepy`"
+                "slack_sdk is not installed. "
+                "Please install it with `pip install slack-sdk`"
             )
 
         slack = WebClient(token=bot_token)
@@ -58,9 +57,10 @@ class SlackApiWrapper(BaseModel):
         return values
 
     def channels_read(self) -> str:
+        """ Read the channels from the slack workspace """
         try:
             import json
-            # Call the conversations.list method using the WebClient
+            # Call the conversations.list method using the slack WebClient
             response = self.slack.conversations_list()
             channels = []
 
@@ -79,11 +79,16 @@ class SlackApiWrapper(BaseModel):
             raise Exception("Failed to write chat message")
 
     def chat_write(self, query: str) -> str:
+        """ 
+        Take a json object of {"channel": "channel_name", "message": "message"}
+        and write it to the channel
+        """
         try:
             import json
             params = json.loads(query)
             fields = dict(params)
-            response = self.slack.chat_postMessage(
+            # Call the chat.postMessage method using the slack WebClient
+            self.slack.chat_postMessage(
                 channel=fields["channel"],
                 text=fields["message"]
             )
@@ -96,7 +101,8 @@ class SlackApiWrapper(BaseModel):
             print("Error: {}".format(e))
             raise Exception("Failed to write chat message")
 
-    def run(self, mode: str, text: str) -> str:
+    def run(self, mode: str, text: Optional[str]) -> str:
+        """ Based on the mode from the caller, run the appropriate function. """
         if mode == "channels_read":
             return self.channels_read()
         elif mode == "chat_write":
