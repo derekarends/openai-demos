@@ -1,6 +1,6 @@
-# Streamlit Audio
+# Whisper Demo
 
-This demo is used to show how you can use Streamlit send audio to OpenAI's Whisper.
+This demo is used to show how you can get data from your computers mic and send it over to OpenAI's whisper endpoint for transcription.
 
 To run
 * Copy `.env.template`
