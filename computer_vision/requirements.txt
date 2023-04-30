@@ -3,3 +3,6 @@ jupyter==1.0.0
 openai==0.27.5
 torchaudio==2.0.1
 ultralytics==8.0.90
+streamlit==1.22.0
+streamlit-webrtc>=0.34.1
+aiortc==1.4.0
