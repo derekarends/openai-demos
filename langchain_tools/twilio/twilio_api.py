@@ -73,10 +73,10 @@ class TwilioApiWrapper(BaseModel):
             fields = dict(params)
 
             # Send the message
-            # self.twilio.messages.create(
-            #     to=fields["phone"],
-            #     from_=self.from_number,
-            #     body=fields["message"])
+            self.twilio.messages.create(
+                to=fields["phone"],
+                from_=self.from_number,
+                body=fields["message"])
 
             return "Successfully sent text message"
         except ImportError:
