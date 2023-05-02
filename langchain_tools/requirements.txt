@@ -5,3 +5,4 @@ pydantic==1.10.4
 langchain~=0.0.138
 slack-sdk==3.21.3
 twilio==8.1.0
+sendgrid==6.10.0

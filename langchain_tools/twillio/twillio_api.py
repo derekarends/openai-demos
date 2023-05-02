@@ -14,8 +14,6 @@ class TwillioApiWrapper(BaseModel):
     """ Wrapper for Twillo API. """
 
     twillio: Any  #: :meta private:
-    account_sid: Optional[str] = None
-    auth_token: Optional[str] = None
     from_number: Optional[str] = None
 
     operations: List[Dict] = [
@@ -43,11 +41,9 @@ class TwillioApiWrapper(BaseModel):
         """ Validate that api key and python package exists in environment. """
         account_sid = get_from_dict_or_env(
             values, "account_sid", "TWILLIO_ACCOUNT_SID")
-        values["account_sid"] = account_sid
 
         auth_token = get_from_dict_or_env(
             values, "auth_token", "TWILLIO_AUTH_TOKEN")
-        values["auth_token"] = auth_token
 
         from_number = get_from_dict_or_env(
             values, "from_number", "TWILLIO_FROM_NUMBER")
@@ -82,14 +78,14 @@ class TwillioApiWrapper(BaseModel):
                 from_=self.from_number,
                 body=fields["message"])
 
-            return "Successfully wrote chat message"
+            return "Successfully sent text message"
         except ImportError:
             raise ImportError(
                 "json is not installed. " "Please install it with `pip install json`"
             )
         except Exception as e:
             print("Error: {}".format(e))
-            raise Exception("Failed to write chat message")
+            raise Exception("Failed to send text message")
 
     # Used for dummy data
     def contacts_read(self) -> str:
