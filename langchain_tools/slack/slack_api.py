@@ -15,8 +15,8 @@ class SlackApiWrapper(BaseModel):
     """ Wrapper for Slack API. """
 
     slack: Any  #: :meta private:
-    bot_token: Optional[str] = None
 
+    # List of operations that this tool can perform
     operations: List[Dict] = [
         {
             "mode": "channels_read",
@@ -41,7 +41,6 @@ class SlackApiWrapper(BaseModel):
     def validate_environment(cls, values: Dict) -> Dict:
         """ Validate that api key and python package exists in environment. """
         bot_token = get_from_dict_or_env(values, "bot_token", "SLACK_BOT_TOKEN")
-        values["bot_token"] = bot_token
 
         try:
             from slack_sdk import WebClient
@@ -55,6 +54,15 @@ class SlackApiWrapper(BaseModel):
         values["slack"] = slack
 
         return values
+    
+    def run(self, mode: str, text: Optional[str]) -> str:
+        """ Based on the mode from the caller, run the appropriate function. """
+        if mode == "channels_read":
+            return self.channels_read()
+        elif mode == "chat_write":
+            return self.chat_write(text)
+        else:
+            raise ValueError(f"Got unexpected mode {mode}")
 
     def channels_read(self) -> str:
         """ Read the channels from the slack workspace """
@@ -100,12 +108,4 @@ class SlackApiWrapper(BaseModel):
         except SlackApiError as e:
             print("Error: {}".format(e))
             raise Exception("Failed to write chat message")
-
-    def run(self, mode: str, text: Optional[str]) -> str:
-        """ Based on the mode from the caller, run the appropriate function. """
-        if mode == "channels_read":
-            return self.channels_read()
-        elif mode == "chat_write":
-            return self.chat_write(text)
-        else:
-            raise ValueError(f"Got unexpected mode {mode}")
+        

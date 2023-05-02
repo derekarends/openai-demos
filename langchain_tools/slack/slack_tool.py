@@ -13,7 +13,7 @@ from langchain.tools.base import BaseTool
 from slack_api import SlackApiWrapper
 
 
-class SlackAction(BaseTool):
+class SlackTool(BaseTool):
     api_wrapper: SlackApiWrapper = Field(default_factory=SlackApiWrapper)
     mode: str
     name = ""
@@ -25,4 +25,4 @@ class SlackAction(BaseTool):
 
     async def _arun(self, _: str) -> str:
         """Use the Slack API to run an operation."""
-        raise NotImplementedError("SlackAction does not support async")
+        raise NotImplementedError("SlackTool does not support async")
