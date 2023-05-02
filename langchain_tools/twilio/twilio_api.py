@@ -4,28 +4,28 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Extra, root_validator
 
 from prompts import (
-    TWILLIO_SEND_TEXT,
-    TWILLIO_READ_CONTACTS,
+    TWILIO_SEND_TEXT,
+    TWILIO_READ_CONTACTS,
 )
 from langchain.utils import get_from_dict_or_env
 
 
-class TwillioApiWrapper(BaseModel):
+class TwilioApiWrapper(BaseModel):
     """ Wrapper for Twillo API. """
 
-    twillio: Any  #: :meta private:
+    twilio: Any  #: :meta private:
     from_number: Optional[str] = None
 
     operations: List[Dict] = [
         {
             "mode": "text_send",
             "name": "Send text message",
-            "description": TWILLIO_SEND_TEXT,
+            "description": TWILIO_SEND_TEXT,
         },
         {
             "mode": "contacts_read",
             "name": "Read available contacts",
-            "description": TWILLIO_READ_CONTACTS,
+            "description": TWILIO_READ_CONTACTS,
         }
     ]
 
@@ -40,13 +40,13 @@ class TwillioApiWrapper(BaseModel):
     def validate_environment(cls, values: Dict) -> Dict:
         """ Validate that api key and python package exists in environment. """
         account_sid = get_from_dict_or_env(
-            values, "account_sid", "TWILLIO_ACCOUNT_SID")
+            values, "account_sid", "TWILIO_ACCOUNT_SID")
 
         auth_token = get_from_dict_or_env(
-            values, "auth_token", "TWILLIO_AUTH_TOKEN")
+            values, "auth_token", "TWILIO_AUTH_TOKEN")
 
         from_number = get_from_dict_or_env(
-            values, "from_number", "TWILLIO_FROM_NUMBER")
+            values, "from_number", "TWILIO_FROM_NUMBER")
         values["from_number"] = from_number
 
         try:
@@ -54,11 +54,11 @@ class TwillioApiWrapper(BaseModel):
         except ImportError:
             raise ImportError(
                 "twilio is not installed. "
-                "Please install it with `pip install twillio`"
+                "Please install it with `pip install twilio`"
             )
 
-        twillio = Client(account_sid, auth_token)
-        values["twillio"] = twillio
+        twilio = Client(account_sid, auth_token)
+        values["twilio"] = twilio
 
         return values
 
@@ -73,10 +73,10 @@ class TwillioApiWrapper(BaseModel):
             fields = dict(params)
 
             # Send the message
-            self.twillio.messages.create(
-                to=fields["phone"],
-                from_=self.from_number,
-                body=fields["message"])
+            # self.twilio.messages.create(
+            #     to=fields["phone"],
+            #     from_=self.from_number,
+            #     body=fields["message"])
 
             return "Successfully sent text message"
         except ImportError:

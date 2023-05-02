@@ -1,26 +1,26 @@
-"""Twillio Toolkit."""
+"""Twilio Toolkit."""
 from typing import List
 
 from langchain.agents.agent_toolkits.base import BaseToolkit
 from langchain.tools import BaseTool
-from twillio_tool import TwillioAction
-from twillio_api import TwillioApiWrapper
+from twilio_tool import TwilioAction
+from twilio_api import TwilioApiWrapper
 
 
-class TwillioToolKit(BaseToolkit):
-    """Twillio Toolkit."""
+class TwilioToolKit(BaseToolkit):
+    """Twilio Toolkit."""
 
     tools: List[BaseTool] = []
 
     @classmethod
-    def from_twillio_api_wrapper(cls, twillio_api_wrapper: TwillioApiWrapper) -> "TwillioToolKit":
-        actions = twillio_api_wrapper.list()
+    def from_twilio_api_wrapper(cls, twilio_api_wrapper: TwilioApiWrapper) -> "TwilioToolKit":
+        actions = twilio_api_wrapper.list()
         tools = [
-            TwillioAction(
+            TwilioAction(
                 name=action["name"],
                 description=action["description"],
                 mode=action["mode"],
-                api_wrapper=twillio_api_wrapper,
+                api_wrapper=twilio_api_wrapper,
             )
             for action in actions
         ]
