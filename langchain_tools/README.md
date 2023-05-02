@@ -11,6 +11,6 @@ To run
 * Run the notebook.
 
 ## Tools
-* (Send Grid)[send_grid] - Allows the ability to use Send Grid to send emails
-* (Twilio)[twilio] - Allows the ability to use Twilio to send SMS messages
-* (Slack)[slack] - Allows the ability to use Slack to send messages
+* [Send Grid](send_grid) - Allows the ability to use Send Grid to send emails
+* [Twilio](twilio) - Allows the ability to use Twilio to send SMS messages
+* [Slack](slack) - Allows the ability to use Slack to send messages
