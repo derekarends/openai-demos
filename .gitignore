@@ -6,5 +6,6 @@
 .vscode
 .idea
 .venv
+.cache
 
 yolov8n.pt

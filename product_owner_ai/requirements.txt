@@ -4,6 +4,4 @@ openai==0.27.5
 pydantic==1.10.4
 langchain~=0.0.161
 slack-sdk==3.21.3
-twilio==8.1.0
-sendgrid==6.10.0
-spotipy==2.23.0
+atlassian-python-api==3.36.0
