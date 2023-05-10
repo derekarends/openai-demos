@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Extra, root_validator
 
-from prompts import (
+from jira_prompts import (
     JIRA_CATCH_ALL_PROMPT,
     JIRA_GET_ALL_PROJECTS_PROMPT,
     JIRA_ISSUE_CREATE_PROMPT,
@@ -13,7 +13,7 @@ from langchain.utils import get_from_dict_or_env
 
 
 # TODO: think about error handling, more specific api specs, and jql/project limits
-class JiraAPIWrapper(BaseModel):
+class JiraApiWrapper(BaseModel):
     """Wrapper for Jira API."""
 
     jira: Any  #: :meta private:

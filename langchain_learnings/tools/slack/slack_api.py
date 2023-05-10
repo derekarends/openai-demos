@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Extra, root_validator
 from slack_sdk.errors import SlackApiError
 
-from prompts import (
+from slack_prompts import (
     SLACK_WRITE_MESSAGE_TO_CHANNEL,
     SLACK_READ_CHANNELS,
 )

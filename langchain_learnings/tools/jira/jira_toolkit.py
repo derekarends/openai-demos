@@ -4,7 +4,7 @@ from typing import List
 from langchain.agents.agent_toolkits.base import BaseToolkit
 from langchain.tools import BaseTool
 from jira_tool import JiraAction
-from jira_api import JiraAPIWrapper
+from jira_api import JiraApiWrapper
 
 
 class JiraToolkit(BaseToolkit):
@@ -13,7 +13,7 @@ class JiraToolkit(BaseToolkit):
     tools: List[BaseTool] = []
 
     @classmethod
-    def from_jira_api_wrapper(cls, jira_api_wrapper: JiraAPIWrapper) -> "JiraToolkit":
+    def from_jira_api_wrapper(cls, jira_api_wrapper: JiraApiWrapper) -> "JiraToolkit":
         actions = jira_api_wrapper.list()
         tools = [
             JiraAction(

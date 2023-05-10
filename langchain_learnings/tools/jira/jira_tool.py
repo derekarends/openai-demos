@@ -18,7 +18,7 @@ from langchain.llms import OpenAI
 from langchain.utilities.jira import JiraAPIWrapper
 
 llm = OpenAI(temperature=0)
-jira = JiraAPIWrapper()
+jira = JiraApiWrapper()
 toolkit = JiraToolkit.from_jira_api_wrapper(jira)
 agent = initialize_agent(
     toolkit.get_tools(),
@@ -31,11 +31,11 @@ agent = initialize_agent(
 from pydantic import Field
 
 from langchain.tools.base import BaseTool
-from jira_api import JiraAPIWrapper
+from jira_api import JiraApiWrapper
 
 
 class JiraAction(BaseTool):
-    api_wrapper: JiraAPIWrapper = Field(default_factory=JiraAPIWrapper)
+    api_wrapper: JiraApiWrapper = Field(default_factory=JiraApiWrapper)
     mode: str
     name = ""
     description = ""
