@@ -2,6 +2,7 @@
 from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Extra, root_validator
+from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
 from slack_prompts import (
@@ -14,7 +15,7 @@ from langchain.utils import get_from_dict_or_env
 class SlackApiWrapper(BaseModel):
     """ Wrapper for Slack API. """
 
-    slack: Any  #: :meta private:
+    slack: WebClient  #: :meta private:
 
     # List of operations that this tool can perform
     operations: List[Dict] = [
@@ -41,14 +42,6 @@ class SlackApiWrapper(BaseModel):
     def validate_environment(cls, values: Dict) -> Dict:
         """ Validate that api key and python package exists in environment. """
         bot_token = get_from_dict_or_env(values, "bot_token", "SLACK_BOT_TOKEN")
-
-        try:
-            from slack_sdk import WebClient
-        except ImportError:
-            raise ImportError(
-                "slack_sdk is not installed. "
-                "Please install it with `pip install slack-sdk`"
-            )
 
         slack = WebClient(token=bot_token)
         values["slack"] = slack
