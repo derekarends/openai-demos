@@ -5,8 +5,8 @@ This demo repo is used to show how to install pgvector, load vector embeddings, 
 To run with PostgreSQL docker:
 * `docker pull ankane/pgvector`
 * Connect to the server
-* Create the database which is first line [scripts.sql](scripts.sql)
-* Make sure that database is selected and execute the rest of [scripts.sql](scripts.sql)
+  * Execute the following 
+  * ```CREATE EXTENSION vector IF NOT EXISTS```
 * Copy `.env.template`
 * Rename to `.env`
 * Fill out required env variables
