@@ -6,7 +6,7 @@ To run with PostgreSQL docker:
 * `docker pull ankane/pgvector`
 * Connect to the server
   * Execute the following 
-  * ```CREATE EXTENSION vector IF NOT EXISTS```
+  * ```create extension if not exists vector;```
 * Copy `.env.template`
 * Rename to `.env`
 * Fill out required env variables
