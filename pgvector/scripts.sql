@@ -1,6 +1,7 @@
-create database document_search;
+create database doc_search;
 
 create extension if not exists vector;
+
 
 create table if not exists documents
 (
