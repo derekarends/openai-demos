@@ -34,6 +34,7 @@ class SlackApiWrapper(BaseModel):
     class Config:
         """ Configuration for this pydantic object. """
         extra = Extra.forbid
+        arbitrary_types_allowed = True
 
     def list(self) -> List[Dict]:
         return self.operations
